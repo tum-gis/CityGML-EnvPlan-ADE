@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:bldg="http://www.opengis.net/citygml/building/2.0" xmlns:core="http://www.opengis.net/citygml/2.0" xmlns:envplan="http://www.citygml.org/ade/envplan/1.0" xmlns:frn="http://www.opengis.net/citygml/cityfurniture/2.0" xmlns:gml="http://www.opengis.net/gml" xmlns:grp="http://www.opengis.net/citygml/cityobjectgroup/2.0" xmlns:veg="http://www.opengis.net/citygml/vegetation/2.0" xmlns:wtr="http://www.opengis.net/citygml/waterbody/2.0" elementFormDefault="qualified" targetNamespace="http://www.citygml.org/ade/envplan/1.0" version="1.0">
+  <import namespace="http://www.opengis.net/citygml/2.0" schemaLocation="http://schemas.opengis.net/citygml/2.0/cityGMLBase.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/building/2.0" schemaLocation="http://schemas.opengis.net/citygml/building/2.0/building.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/cityfurniture/2.0" schemaLocation="http://schemas.opengis.net/citygml/cityfurniture/2.0/cityFurniture.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/cityobjectgroup/2.0" schemaLocation="http://schemas.opengis.net/citygml/cityobjectgroup/2.0/cityObjectGroup.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/vegetation/2.0" schemaLocation="http://schemas.opengis.net/citygml/vegetation/2.0/vegetation.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/waterbody/2.0" schemaLocation="http://schemas.opengis.net/citygml/waterbody/2.0/waterBody.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/transportation/2.0" schemaLocation="http://schemas.opengis.net/citygml/transportation/2.0/transportation.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/generics/2.0" schemaLocation="http://schemas.opengis.net/citygml/generics/2.0/generics.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/appearance/2.0" schemaLocation="http://schemas.opengis.net/citygml/appearance/2.0/appearance.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/landuse/2.0" schemaLocation="http://schemas.opengis.net/citygml/landuse/2.0/landUse.xsd"/>
+  <import namespace="http://www.opengis.net/citygml/relief/2.0" schemaLocation="http://schemas.opengis.net/citygml/relief/2.0/relief.xsd"/>
+  <import namespace="http://www.opengis.net/gml" schemaLocation="http://schemas.opengis.net/gml/3.1.1/base/gml.xsd"/>
+  <!--XML Schema document created by ShapeChange - http://shapechange.net/-->
+  <element abstract="true" name="AbstractEnvironmentalSite" substitutionGroup="core:_CityObject" type="envplan:AbstractEnvironmentalSiteType"/>
+   <complexType abstract="true" name="AbstractEnvironmentalSiteType">
+    <complexContent>
+      <extension base="core:AbstractCityObjectType">
+        <sequence>
+		  <element minOccurs="0" name="area" type="gml:AreaType"/>
+          <element minOccurs="0" name="lod1MultiSurface" type="gml:MultiSurfacePropertyType"/>
+          <element minOccurs="0" name="lod4MultiSurface" type="gml:MultiSurfacePropertyType"/>
+          <element minOccurs="0" name="lod2MultiSurface" type="gml:MultiSurfacePropertyType"/>
+          <element minOccurs="0" name="lod3MultiSurface" type="gml:MultiSurfacePropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AbstractEnvironmentalSitePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:AbstractEnvironmentalSite"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element abstract="true" name="AbstractMeasureObject" substitutionGroup="frn:CityFurniture" type="envplan:AbstractMeasureObjectType"/>
+  <complexType abstract="true" name="AbstractMeasureObjectType">
+    <complexContent>
+      <extension base="frn:CityFurnitureType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="relatedMeasureToObject" type="envplan:EnvironmentalMeasurePropertyType">
+		   <annotation>
+              <appinfo>
+                <gml:targetElement>envplan:EnvironmentalMeasure</gml:targetElement>
+                <gml:reversePropertyName>envplan:realisationAsObject</gml:reversePropertyName>
+              </appinfo>
+			</annotation>
+		   </element>
+		   <element maxOccurs="unbounded" minOccurs="0" name="realisationAsCulvert" type="envplan:CulvertPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="AbstractMeasureObjectPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:AbstractMeasureObject"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <simpleType name="AgeValueType">
+    <restriction base="string">
+      <enumeration value="adult"/>
+      <enumeration value="subadult"/>
+      <enumeration value="juvenile"/>
+      <enumeration value="unknown"/>
+    </restriction>
+  </simpleType>
+  <element name="projectID" substitutionGroup="grp:_GenericApplicationPropertyOfCityObjectGroup" type="string">
+    <annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="projectName" substitutionGroup="grp:_GenericApplicationPropertyOfCityObjectGroup" type="string">
+    <annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="constructionStart" substitutionGroup="grp:_GenericApplicationPropertyOfCityObjectGroup" type="date">
+    <annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="constructionEnd" substitutionGroup="grp:_GenericApplicationPropertyOfCityObjectGroup" type="date">
+	<annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>  	
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="Compensation" substitutionGroup="gml:_Feature" type="envplan:CompensationType"/>
+  <complexType name="CompensationType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element minOccurs="0" name="level" type="envplan:HabitatLevelType"/>
+          <element minOccurs="0" name="habitatTypeID" type="gml:CodeType"/>
+          <element minOccurs="0" name="preload" type="boolean"/>
+          <element minOccurs="0" name="habitatValue" type="integer"/>
+          <element minOccurs="0" name="effect" type="envplan:EffectValueType"/>
+          <element minOccurs="0" name="factor" type="double"/>
+          <element minOccurs="0" name="costFactor" type="double"/>
+          <element minOccurs="0" name="area" type="gml:AreaType"/>
+          <element minOccurs="0" name="compensationValue" type="double"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="additionalCompensation" type="string"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="compensationFor" type="envplan:CityObjectCompensationForType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="CompensationPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:Compensation"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <complexType name="CityObjectCompensationForType">
+	<sequence minOccurs="0">
+		<element ref="core:_CityObject"/>
+	</sequence>
+	<attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="Conflict" substitutionGroup="core:_Site" type="envplan:ConflictType"/>
+  <complexType name="ConflictType">
+    <complexContent>
+      <extension base="core:AbstractSiteType">
+        <sequence>
+          <element minOccurs="0" name="conflictType" type="envplan:ConflictTypeValueType"/>
+          <element minOccurs="0" name="conflictID" type="string"/>
+          <element minOccurs="0" name="conflictDescription" type="string"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="leadsToMeasure" type="envplan:EnvironmentalMeasurePropertyType">
+		    <annotation>
+              <appinfo>
+                <gml:targetElement>envplan:EnvironmentalMeasure</gml:targetElement>
+                <gml:reversePropertyName>envplan:relatedConflict</gml:reversePropertyName>
+              </appinfo>
+			</annotation>
+		  </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ConflictPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:Conflict"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <simpleType name="ConflictTypeValueType">
+    <restriction base="string">
+      <enumeration value="construction"/>
+      <enumeration value="facility"/>
+      <enumeration value="operation"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="ConstructionPlanType">
+    <restriction base="string">
+      <enumeration value="beforeConstruction"/>
+      <enumeration value="duringConstruction"/>
+      <enumeration value="afterConstruction"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="ConstructionTimeType">
+    <restriction base="string">
+      <enumeration value="beforeConstructionStart"/>
+      <enumeration value="afterConstructionStart"/>
+      <enumeration value="beforeConstructionEnd"/>
+      <enumeration value="afterConstructionEnd"/>
+    </restriction>
+  </simpleType>
+  <element name="Culvert" substitutionGroup="bldg:_Opening" type="envplan:CulvertType"/>
+  <complexType name="CulvertType">
+    <complexContent>
+      <extension base="bldg:AbstractOpeningType">
+        <sequence/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="CulvertPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:Culvert"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="EcologicalParameter" substitutionGroup="wtr:WaterBody" type="envplan:EcologicalParameterType"/>
+  <complexType name="EcologicalParameterType">
+    <complexContent>
+      <extension base="wtr:WaterBodyType">
+        <sequence>
+          <element minOccurs="0" name="structure" type="envplan:StructureValueType"/>
+          <element minOccurs="0" name="status" type="gml:CodeType"/>
+          <element minOccurs="0" name="mappingClass" type="integer"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="EcologicalParameterPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:EcologicalParameter"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <simpleType name="EffectValueType">
+    <restriction base="string">
+      <enumeration value="sealing"/>
+      <enumeration value="planting"/>
+      <enumeration value="construction"/>
+      <enumeration value="operation"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="Enumeration1Type">
+    <restriction base="string"/>
+  </simpleType>
+  <element name="EnvironmentalMaintenance" substitutionGroup="gml:_Feature" type="envplan:EnvironmentalMaintenanceType"/>
+  <complexType name="EnvironmentalMaintenanceType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+		  <element minOccurs="0" name="maintenanceDescription" type="string"/>
+          <element minOccurs="0" name="developmentDurationInYears" type="integer"/>
+          <element minOccurs="0" name="maintenanceDurationInYears" type="integer"/>
+          <element minOccurs="0" name="reportIntervalDevelopmentInYears" type="integer"/>
+		  <element minOccurs="0" name="reportIntervalMaintenanceInYears" type="integer"/>
+          <element minOccurs="0" name="permanent" type="boolean"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="originHabitat" type="gml:CodeType"/>
+          <element minOccurs="0" name="targetHabitat" type="gml:CodeType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="compensationValue" type="integer"/>
+          <element minOccurs="0" name="reachedTarget" type="boolean"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="EnvironmentalMaintenancePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:EnvironmentalMaintenance"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="EnvironmentalMeasure" substitutionGroup="core:_Site" type="envplan:EnvironmentalMeasureType"/>
+  <complexType name="EnvironmentalMeasureType">
+    <complexContent>
+      <extension base="core:AbstractSiteType">
+        <sequence>
+          <element minOccurs="0" name="measureFunction" type="gml:CodeType"/>
+          <element minOccurs="0" name="measureID" type="string"/>
+          <element minOccurs="0" name="measureDescription" type="string"/>
+          <element minOccurs="0" name="constructionDependency" type="envplan:ConstructionPlanType"/>
+          <element minOccurs="0" name="start" type="date"/>
+          <element minOccurs="0" name="end" type="date"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="regulationPeriod" type="envplan:RegulationPeriodValuePropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="dependingRealisation" type="envplan:RealisationSchedulePropertyType"/>
+          <element minOccurs="0" name="plannendDurationInDays" type="integer"/>
+          <element minOccurs="0" name="environmentalSupervision" type="boolean"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="relatedConflict" type="envplan:ConflictPropertyType">
+		    <annotation>
+              <appinfo>
+                <gml:targetElement>envplan:Conflict</gml:targetElement>
+                <gml:reversePropertyName>envplan:leadsToMeasure</gml:reversePropertyName>
+              </appinfo>
+			</annotation>
+		  </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="predecessorMeasure" type="envplan:PredecessorMeasurePropertyType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="realisationOnSite" type="envplan:MeasureSitePropertyType">
+		   <annotation>
+              <appinfo>
+                <gml:targetElement>envplan:MeasureSite</gml:targetElement>
+                <gml:reversePropertyName>envplan:relatedMeasureToSite</gml:reversePropertyName>
+              </appinfo>
+			</annotation>
+		  </element>
+          <element maxOccurs="unbounded" minOccurs="0" name="realisationAsObject" type="envplan:AbstractMeasureObjectPropertyType">
+		   <annotation>
+              <appinfo>
+                <gml:targetElement>envplan:AbstractMeasureObject</gml:targetElement>
+                <gml:reversePropertyName>envplan:relatedMeasureToObject</gml:reversePropertyName>
+              </appinfo>
+			</annotation>
+		  </element>
+          <element minOccurs="0" name="maintenance" type="envplan:EnvironmentalMaintenancePropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="EnvironmentalMeasurePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:EnvironmentalMeasure"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <complexType name="PredecessorMeasurePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:EnvironmentalMeasure"/>
+    </sequence>
+	<attribute name="daysAfterPredecessorMeasure" type="integer"/>
+	<attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="FloodProneArea" substitutionGroup="wtr:_WaterObject" type="envplan:FloodProneAreaType"/>
+  <complexType name="FloodProneAreaType">
+    <complexContent>
+      <extension base="wtr:AbstractWaterObjectType">
+        <sequence>
+          <element minOccurs="0" name="area" type="gml:AreaType"/>
+          <element minOccurs="0" name="probability" type="string"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="FloodProneAreaPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:FloodProneArea"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="Habitat" substitutionGroup="envplan:AbstractMeasureObject" type="envplan:HabitatType"/>
+  <complexType name="HabitatType">
+    <complexContent>
+      <extension base="envplan:AbstractMeasureObjectType">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="material" type="string"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="volume" type="gml:VolumeType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="lenght" type="gml:LengthType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="weightInKg" type="double"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="HabitatPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:Habitat"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="HabitatAndBiotope" substitutionGroup="envplan:AbstractEnvironmentalSite" type="envplan:HabitatAndBiotopeType"/>
+  <complexType name="HabitatAndBiotopeType">
+    <complexContent>
+      <extension base="envplan:AbstractEnvironmentalSiteType">
+        <sequence>
+          <element minOccurs="0" name="habitatTypeScheme" type="gml:CodeType"/>
+          <element minOccurs="0" name="habitatTypeID" type="gml:CodeType"/>
+          <element minOccurs="0" name="habitatTypeAddition" type="string"/>
+          <element minOccurs="0" name="localHabitatName" type="string"/>
+          <element minOccurs="0" name="habitatValue" type="integer"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="HabitatAndBiotopePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:HabitatAndBiotope"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <simpleType name="HabitatLevelType">
+    <restriction base="string">
+      <enumeration value="very_low"/>
+      <enumeration value="low"/>
+      <enumeration value="medium"/>
+      <enumeration value="high"/>
+      <enumeration value="very_high"/>
+      <enumeration value="excellent"/>
+    </restriction>
+  </simpleType>
+  <element name="MeasureSite" substitutionGroup="envplan:AbstractEnvironmentalSite" type="envplan:MeasureSiteType"/>
+  <complexType name="MeasureSiteType">
+    <complexContent>
+      <extension base="envplan:AbstractEnvironmentalSiteType">
+        <sequence>
+          <element minOccurs="0" name="type" type="gml:CodeType"/>
+          <element minOccurs="0" name="compensationValue" type="integer"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="relatedMeasureToSite" type="envplan:EnvironmentalMeasurePropertyType">
+			<annotation>
+              <appinfo>
+                <gml:targetElement>envplan:EnvironmentalMeasure</gml:targetElement>
+                <gml:reversePropertyName>envplan:realisationOnSite</gml:reversePropertyName>
+              </appinfo>
+			</annotation>
+		  </element>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="MeasureSitePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:MeasureSite"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="NestBox" substitutionGroup="envplan:AbstractMeasureObject" type="envplan:NestBoxType"/>
+  <complexType name="NestBoxType">
+    <complexContent>
+      <extension base="envplan:AbstractMeasureObjectType">
+        <sequence>
+          <element minOccurs="0" name="function" type="gml:CodeType"/>
+          <element minOccurs="0" name="quantity" type="integer"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="NestBoxPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:NestBox"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="NoiseBarrier" substitutionGroup="bldg:_AbstractBuilding" type="envplan:NoiseBarrierType"/>
+  <complexType name="NoiseBarrierType">
+    <complexContent>
+      <extension base="bldg:AbstractBuildingType">
+        <sequence/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="NoiseBarrierPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:NoiseBarrier"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="ProtectedSite" substitutionGroup="envplan:AbstractEnvironmentalSite" type="envplan:ProtectedSiteType"/>
+  <complexType name="ProtectedSiteType">
+    <complexContent>
+      <extension base="envplan:AbstractEnvironmentalSiteType">
+        <sequence>
+          <element minOccurs="0" name="protectedSiteID" type="string"/>
+          <element minOccurs="0" name="designationScheme" type="gml:CodeType"/>
+          <element minOccurs="0" name="siteName" type="string"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="siteProtectionClassification" type="envplan:ProtectionClassificationValueType"/>
+          <element minOccurs="0" name="bufferDistance" type="gml:LengthType"/>
+          <element minOccurs="0" name="targetSpecies" type="gml:CodeType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ProtectedSitePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:ProtectedSite"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <simpleType name="ProtectionClassificationValueType">
+    <restriction base="string">
+      <enumeration value="natureConservation"/>
+      <enumeration value="archaeological"/>
+      <enumeration value="cultural"/>
+      <enumeration value="ecological"/>
+      <enumeration value="landscape"/>
+      <enumeration value="environment"/>
+      <enumeration value="geological"/>
+    </restriction>
+  </simpleType>
+  <element name="ProtectionFence" substitutionGroup="envplan:AbstractMeasureObject" type="envplan:ProtectionFenceType"/>
+  <complexType name="ProtectionFenceType">
+    <complexContent>
+      <extension base="envplan:AbstractMeasureObjectType">
+        <sequence>
+          <element minOccurs="0" name="function" type="gml:CodeType"/>
+          <element minOccurs="0" name="length" type="gml:LengthType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="ProtectionFencePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:ProtectionFence"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="ProtectionPeriodValue" substitutionGroup="gml:_Object" type="envplan:ProtectionPeriodValueType"/>
+  <complexType name="ProtectionPeriodValueType">
+    <sequence>
+      <element minOccurs="0" name="earliestStart" type="gMonthDay"/>
+      <element minOccurs="0" name="latestStart" type="gMonthDay"/>
+      <element minOccurs="0" name="earliestEnd" type="gMonthDay"/>
+      <element minOccurs="0" name="latestEnd" type="gMonthDay"/>
+    </sequence>
+  </complexType>
+  <complexType name="ProtectionPeriodValuePropertyType">
+    <sequence>
+      <element ref="envplan:ProtectionPeriodValue"/>
+    </sequence>
+  </complexType>
+  <element name="RealisationSchedule" substitutionGroup="gml:_Object" type="envplan:RealisationScheduleType"/>
+  <complexType name="RealisationScheduleType">
+    <sequence>
+      <element minOccurs="0" name="dependencyOnConstruction" type="envplan:ConstructionTimeType"/>
+      <element minOccurs="0" name="startInDays" type="integer"/>
+      <element minOccurs="0" name="endInDays" type="integer"/>
+    </sequence>
+  </complexType>
+  <complexType name="RealisationSchedulePropertyType">
+    <sequence>
+      <element ref="envplan:RealisationSchedule"/>
+    </sequence>
+  </complexType>
+  <element name="RegulationPeriodValue" substitutionGroup="gml:_Object" type="envplan:RegulationPeriodValueType"/>
+  <complexType name="RegulationPeriodValueType">
+    <sequence>
+      <element minOccurs="0" name="start" type="gMonthDay"/>
+      <element minOccurs="0" name="end" type="gMonthDay"/>
+    </sequence>
+  </complexType>
+  <complexType name="RegulationPeriodValuePropertyType">
+    <sequence>
+      <element ref="envplan:RegulationPeriodValue"/>
+    </sequence>
+  </complexType>
+  <simpleType name="SexValueType">
+    <restriction base="string">
+      <enumeration value="female"/>
+      <enumeration value="male"/>
+      <enumeration value="hermaphrodite"/>
+      <enumeration value="unknown"/>
+    </restriction>
+  </simpleType>
+  <element name="age" substitutionGroup="veg:_GenericApplicationPropertyOfSolitaryVegetationObject" type="integer">
+	<annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="habitatStructure" substitutionGroup="veg:_GenericApplicationPropertyOfSolitaryVegetationObject" type="boolean">
+	<annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="legalProtection" substitutionGroup="veg:_GenericApplicationPropertyOfSolitaryVegetationObject" type="gml:CodeType">
+	<annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="commonName" substitutionGroup="veg:_GenericApplicationPropertyOfSolitaryVegetationObject" type="string">
+	<annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="Species" substitutionGroup="core:_CityObject" type="envplan:SpeciesType">
+	<annotation>
+	  <appinfo>
+		<taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="topLevel">true</taggedValue>       
+	  </appinfo>
+	</annotation>
+  </element>
+  <complexType name="SpeciesType">
+    <complexContent>
+      <extension base="core:AbstractCityObjectType">
+        <sequence>
+          <element minOccurs="0" name="speciesType" type="gml:CodeType"/>
+          <element minOccurs="0" name="speciesScientificName" type="gml:CodeType"/>
+          <element minOccurs="0" name="speciesCommonName" type="string"/>
+          <element minOccurs="0" name="sex" type="envplan:SexValueType"/>
+          <element minOccurs="0" name="age" type="envplan:AgeValueType"/>
+          <element maxOccurs="unbounded" minOccurs="0" name="evidenceType" type="gml:CodeType"/>
+          <element minOccurs="0" name="legalProtection" type="gml:CodeType"/>
+          <element minOccurs="0" name="protectionPeriod" type="envplan:ProtectionPeriodValuePropertyType"/>
+          <element minOccurs="0" name="lod1EvidenceArea" type="gml:MultiSurfacePropertyType"/>
+          <element minOccurs="0" name="lod4EvidenceArea" type="gml:MultiSurfacePropertyType"/>
+          <element minOccurs="0" name="lod3EvidenceArea" type="gml:MultiSurfacePropertyType"/>
+          <element minOccurs="0" name="lod2EvidenceArea" type="gml:MultiSurfacePropertyType"/>
+          <element minOccurs="0" name="lod2EvidenceLocation" type="gml:PointPropertyType"/>
+          <element minOccurs="0" name="lod4EvidenceLocation" type="gml:PointPropertyType"/>
+          <element minOccurs="0" name="lod1EvidenceLocation" type="gml:PointPropertyType"/>
+          <element minOccurs="0" name="lod3EvidenceLocation" type="gml:PointPropertyType"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="SpeciesPropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:Species"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <simpleType name="StatusValueType">
+    <restriction base="string">
+      <enumeration value="high"/>
+      <enumeration value="good"/>
+      <enumeration value="moderate"/>
+      <enumeration value="poor"/>
+      <enumeration value="bad"/>
+      <enumeration value="unknown"/>
+    </restriction>
+  </simpleType>
+  <simpleType name="StructureValueType">
+    <restriction base="string">
+      <enumeration value="natural"/>
+      <enumeration value="modified"/>
+      <enumeration value="artificial"/>
+    </restriction>
+  </simpleType>
+  <element name="TemporaryConstructionSite" substitutionGroup="envplan:AbstractEnvironmentalSite" type="envplan:TemporaryConstructionSiteType"/>
+  <complexType name="TemporaryConstructionSiteType">
+    <complexContent>
+      <extension base="envplan:AbstractEnvironmentalSiteType">
+        <sequence/>
+      </extension>
+    </complexContent>
+  </complexType>
+  <complexType name="TemporaryConstructionSitePropertyType">
+    <sequence minOccurs="0">
+      <element ref="envplan:TemporaryConstructionSite"/>
+    </sequence>
+    <attributeGroup ref="gml:AssociationAttributeGroup"/>
+  </complexType>
+  <element name="hazardousIncidentPlant" substitutionGroup="bldg:_GenericApplicationPropertyOfAbstractBuilding" type="boolean">
+	<annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+  <element name="cost" substitutionGroup="core:_GenericApplicationPropertyOfCityObject" type="double">
+	<annotation>
+      <appinfo>
+        <taggedValue xmlns="http://www.interactive-instruments.de/ShapeChange/AppInfo" tag="maxOccurs">1</taggedValue>       
+      </appinfo>
+	</annotation>
+  </element>
+</schema>
